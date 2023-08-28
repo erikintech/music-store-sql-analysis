@@ -180,4 +180,22 @@ SELECT customer_name, country, total_spent FROM best_customer
 WHERE rowno <=1;
  
 
-/*Q12: Wich country spent more in buy music*/
+/*Q12: Wich country spent more in music*/
+SELECT customer.country,
+	SUM( invoice_line.unit_price * invoice_line.quantity ) AS total_spent
+FROM customer
+INNER JOIN invoice ON invoice.customer_id = customer.customer_id
+INNER JOIN invoice_line ON invoice_line.invoice_id = invoice.invoice_id
+GROUP BY customer.country
+ORDER BY total_spent DESC
+LIMIT 1;
+
+/*Q13: Wich country spent less in music*/
+SELECT customer.country,
+	SUM( invoice_line.unit_price * invoice_line.quantity ) AS total_spent
+FROM customer
+INNER JOIN invoice ON invoice.customer_id = customer.customer_id
+INNER JOIN invoice_line ON invoice_line.invoice_id = invoice.invoice_id
+GROUP BY customer.country
+ORDER BY total_spent 
+LIMIT 1;
